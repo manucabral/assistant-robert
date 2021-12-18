@@ -1,9 +1,9 @@
-# Robert
-A simple Python web searcher library with different search engines.
+# Assistant Robert
+A simple Python library that provides search with different search engines and more.
 
 # Install
 ```
-pip install roberthelper
+pip install assistant-robert
 ```
 
 # Usage

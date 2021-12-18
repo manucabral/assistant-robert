@@ -4,7 +4,7 @@ LANGUAGUES = {
 }
 
 ENGINE_URL = {
-    'ddgo': 'https://duckduckgo.com/',
+    'ddgo': 'https://html.duckduckgo.com/html/',
     'google': 'https://www.google.com/search'
 }
 

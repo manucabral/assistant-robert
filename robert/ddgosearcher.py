@@ -1,5 +1,6 @@
 from .searcher import Searcher
 from .constants import ENGINE_URL
+from .exceptions import UnknownSafeSearchType
 from bs4 import BeautifulSoup
 
 class DuckDuckGoSearcher(Searcher):
@@ -9,16 +10,17 @@ class DuckDuckGoSearcher(Searcher):
     def parse(self, response: str) -> []:
         result = []
         html = BeautifulSoup(response, "html.parser")
-        divs = html.find_all("div", attrs={"class": "result__body links_main links_deep"})
+        divs = html.find_all("div", attrs={"class": "result results_links results_links_deep web-result"})
         for content in divs:
-            link, title = content.find("a", href=True), content.find("h3")
+            link, title = content.find("a", href=True), content.find("h2")
             if link and title:
                 result.append(link["href"])
         return result
 
-    def search(self, data: str, limit: int = 10, safesearch: int = 1) -> []:
-        url = self.url + f'?q={data}&kp={safesearch}&kl={self.language}'
+    def search(self, data: str, safesearch: int = 1) -> []:
+        if not safesearch in [1, 0, -1]:
+            raise UnknownSafeSearchType(safesearch)
+        url = self.url + f'?q={data}&kp={safesearch}&kl={self.language}&kc=-1'
         print(url)
         res = self.request(url)
-        print(res)
         return self.parse(res)

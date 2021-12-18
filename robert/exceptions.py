@@ -6,3 +6,7 @@ class RobertException(Exception):
 class LanguageNotSupported(RobertException):
     def __init__(self):
         super().__init__('That language is not supported')
+
+class UnknownSafeSearchType(RobertException):
+    def __init__(self, type):
+        super().__init__(f'Safe search {type} does not exist')
